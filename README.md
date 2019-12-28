@@ -1,5 +1,6 @@
 # AdvancedScoreboard
 
+![Alt text](backgrounder.jpg?raw=true "Title")
 ### An advanced, fast and customizable scoreboard plugin
 ### Features:
 - Highly customizable
