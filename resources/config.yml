@@ -19,7 +19,10 @@ interval-time: 20
 # {TIME} -> Shows time
 # {RANDOMCOLOR} -> Randomize the color text
 # {PING} -> Show player's ping
-# {JOBS} -> Show player's job (Requires EconomyJob by poggit-orphanage)
+# {COMBATLOGGER} -> Show Combat Logger duration (Requires CombatLogger by jacknoordhuis)
+# {KDR} -> Shows player's KDR (Requires KDR by JackMD)
+# {DEATHS} -> Shows player's deaths (Requires KDR by JackMD)
+# {KILLS} -> Shows player's kills (Requires KDR by JackMD)
 
 # NEW TAGS SOON
 
