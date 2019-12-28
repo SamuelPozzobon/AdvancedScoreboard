@@ -5,11 +5,14 @@ namespace varion;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
+use pocketmine\utils\TextFormat;
 use varion\Event\LevelChangeEvent;
+use pocketmine\command\{Command,CommandSender};
 use pocketmine\network\mcpe\protocol\RemoveObjectivePacket;
 use pocketmine\network\mcpe\protocol\SetDisplayObjectivePacket;
 use pocketmine\network\mcpe\protocol\SetScorePacket;
 use pocketmine\network\mcpe\protocol\types\ScorePacketEntry;
+use jojoe77777\FormAPI;
 
 
 class AdvancedScoreboard extends PluginBase{
@@ -71,6 +74,48 @@ class AdvancedScoreboard extends PluginBase{
 		$player->sendDataPacket($packet);
 		unset(self::$scoreboard[$player->getName()]);
 	}
+
+    public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args) : bool
+    {
+        switch ($cmd->getName()) {
+            case "as":
+                if ($sender instanceof Player) {
+                    $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+                    $form = $api->createSimpleForm(function (Player $sender, ?int $data){
+                        if ($data === null){
+                            return true;
+                        }
+
+                        switch($data){
+                            case 0:
+                                $this->createScore[$sender->getName()] = $sender->getName();
+                                $sender->sendMessage("§l§fConnecting");
+                                return true;
+                                break;
+
+                            case 1:
+                                $this->removeScore($sender);
+
+                                return true;
+
+                        }
+                        return false;
+                    });
+                    $form->setTitle(TextFormat::GOLD . "§lADVANCED SCOREBOARDS");
+                    $form->setContent("Select an option");
+                    $form->addButton(TextFormat::BOLD . "§l§aShow Scoreboard");
+                    $form->addButton(TextFormat::BOLD . "§l§cHide Scoreboard");
+
+                    $form->sendToPlayer($sender);
+                }
+                else{
+                    $sender->sendMessage(TextFormat::RED . "Use this Command in-game.");
+                    return true;
+                }
+                    }
+                    return true;
+        }
+
 
     /**
      * @param Player $player
