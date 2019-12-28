@@ -215,6 +215,18 @@ class AdvancedScoreboard extends PluginBase{
 			$message = str_replace('{FACTION}', $FactionsPro->getPlayerFaction($player->getName()), $message);
 		}
 
+        $Logger = $this->getServer()->getPluginManager()->getPlugin("CombatLogger");
+        if (!is_null($Logger)) {
+            $message = str_replace('{COMBATLOGGER}', $Logger->getTagDuration($player), $message);
+        }
+
+        $kdr = $this->getServer()->getPluginManager()->getPlugin("KDR");
+        if (!is_null($kdr)) {
+            $message = str_replace('{KDR}', $kdr->getProvider()->getKillToDeathRatio($player), $message);
+            $message = str_replace('{DEATHS}', $kdr->getProvider()->getPlayerDeathPoints($player), $message);
+            $message = str_replace('{KILLS}', $kdr->getProvider()->getPlayerKillPoints($player), $message);
+        }
+
 		$CPS = $this->getServer()->getPluginManager()->getPlugin("PreciseCpsCounter");
 		if (!is_null($CPS)) {
 			$message = str_replace('{CPS}', $CPS->getCps($player), $message);
