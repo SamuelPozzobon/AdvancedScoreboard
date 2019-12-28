@@ -166,7 +166,7 @@ class AdvancedScoreboard extends PluginBase{
 			$message = str_replace('{MONEY}', $EconomyAPI->myMoney($player), $message);
 		}
         $Jobs = $this->getServer()->getPluginManager()->getPlugin("EconomyJob");
-        if (!is_null($EconomyAPI)) {
+        if (!is_null($EconomyJob)) {
             $message = str_replace('{JOBS}', $Jobs->get($player), $message);
         }
 		$FactionsPro = $this->getServer()->getPluginManager()->getPlugin("FactionsPro");
