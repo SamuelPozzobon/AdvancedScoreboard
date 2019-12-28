@@ -3,3 +3,7 @@ main: varion\AdvancedScoreboard
 author: Varion
 version: 1.0.0
 api: 3.0.0
+
+commands:
+ as:
+  description: "Open AdvancedScoreboards menu"
