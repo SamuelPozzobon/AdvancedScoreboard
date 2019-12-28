@@ -1,0 +1,40 @@
+---
+interval-time: 20
+# Amount in ticks after which AdvancedScoreboards would update
+
+# Supported Tags
+# {NAME} -> Name of the player
+# {ONLINE} -> The number of online players
+# {X} {Y} {Z} -> X/Y/Z coordinate of the player
+# {CPS} -> Get the CPS of the player (Requires PreciseCPSCounter by Luca28pet)
+# {RANK} -> Current ingame group (Requires PurePerms by poggit-orphanage)
+# {WORLDNAME} -> Name of the world
+# {WORLDPLAYERS} -> Players in the world
+# {MONEY} -> Money of the player (Requires EconomyAPI by poggit-orphanage)
+# {PREFIX} -> Show prefix of a player (Requires PureChat by poggit-orphanage)
+# {SUFFIX} -> Show suffix of a player(Requires PureChat by poggit-orphanage)
+# {FACTION} -> Show player's factions (Requires FactionsPro by poggit-orphanage)
+# {TICKS} -> Show server's ticks
+# {TPS} -> Show server's tps
+# {TIME} -> Shows time
+# {RANDOMCOLOR} -> Randomize the color text
+# {PING} -> Show player's ping
+# {JOBS} -> Show player's job (Requires EconomyJob by poggit-orphanage)
+
+# NEW TAGS SOON
+
+worlds:
+  world:
+    title:
+    - '&cADVANCEDSCOREBOARD'
+    - '&aADVANCEDSCOREBOARD'
+    lines:
+    - '&7Player: &3{NAME}'
+    - '&7Online: &3{ONLINE}'
+    - '&7World: &3{WORLDNAME}'
+    - '&7CPS: &3{CPS}'    
+    - '&7X: &a{X}'
+    - '&7Y: &a{Y}'
+    - '&7Z: &a{Z}'
+
+...
