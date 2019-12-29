@@ -14,6 +14,7 @@ interval-time: 20
 # {PREFIX} -> Show prefix of a player (Requires PureChat by poggit-orphanage)
 # {SUFFIX} -> Show suffix of a player(Requires PureChat by poggit-orphanage)
 # {FACTION} -> Show player's factions (Requires FactionsPro by poggit-orphanage)
+# {FPOWER} -> Show player's faction power (Requires FactionsPro by poggit-orphanage)
 # {TICKS} -> Show server's ticks
 # {TPS} -> Show server's tps
 # {TIME} -> Shows time
