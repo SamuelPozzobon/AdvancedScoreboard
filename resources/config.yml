@@ -5,6 +5,9 @@ interval-time: 20
 # Supported Tags
 # {NAME} -> Name of the player
 # {ONLINE} -> The number of online players
+# {MAX_ONLINE} -> The server slots number
+# {IP} -> Current player's IP
+# {ITEM_ID} -> Current item in hand
 # {X} {Y} {Z} -> X/Y/Z coordinate of the player
 # {CPS} -> Get the CPS of the player (Requires PreciseCPSCounter by Luca28pet)
 # {RANK} -> Current ingame group (Requires PurePerms by poggit-orphanage)
@@ -24,8 +27,29 @@ interval-time: 20
 # {KDR} -> Shows player's KDR (Requires KDR by JackMD)
 # {DEATHS} -> Shows player's deaths (Requires KDR by JackMD)
 # {KILLS} -> Shows player's kills (Requires KDR by JackMD)
+# {ISLAND_NAME} -> See the island name (Requires RedSkyBlock by RedCraftGH)
+# {ISLAND_MEMBERS} -> See the island members (Requires RedSkyBlock by RedCraftGH)
+# {ISLAND_BANNED} -> See the banned island (Requires RedSkyBlock by RedCraftGH)
+# {ISLAND_LOCKED_STATUS} -> See the island locked status (Requires RedSkyBlock by RedCraftGH)
+# {ISLAND_SIZE} -> See the island size (Requires RedSkyBlock by RedCraftGH)
+# {ISLAND_RANK} -> See the island rank (Requires RedSkyBlock by RedCraftGH)
+# {ISLAND_VALUE} -> See the island value (Requires RedSkyBlock by RedCraftGH)
 
 # NEW TAGS SOON
+
+
+default: # DEFAULT | IF NO WORLDS ARE CONFIGURED WILL DISPLAY THIS FOR EVERY WORLD
+  title:
+    - '&cADVANCEDSCOREBOARD'
+    - '&aADVANCEDSCOREBOARD'
+  lines:
+    - '&7Player: &3{NAME}'
+    - '&7Online: &3{ONLINE}'
+    - '&7World: &3{WORLDNAME}'
+    - '&7CPS: &3{CPS}'
+    - '&7X: &a{X}'
+    - '&7Y: &a{Y}'
+    - '&7Z: &a{Z}'
 
 worlds:
   world:
