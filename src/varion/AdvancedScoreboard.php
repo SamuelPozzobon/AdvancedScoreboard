@@ -170,6 +170,7 @@ class AdvancedScoreboard extends PluginBase{
 		$colors = [TF::DARK_BLUE, TF::DARK_GREEN, TF::DARK_AQUA, TF::DARK_RED, TF::DARK_PURPLE, TF::GOLD, TF::GRAY, TF::DARK_GRAY, TF::BLUE, TF::GREEN, TF::AQUA, TF::RED, TF::LIGHT_PURPLE, TF::YELLOW, TF::WHITE];
 		return $colors[rand(0,14)];
 	}
+	
 
     /**
      * @param Player $player
@@ -179,6 +180,8 @@ class AdvancedScoreboard extends PluginBase{
     public function translate(Player $player, string $message) : string{
         $message = str_replace('{PING}', $player->getPing(), $message);
         $message = str_replace('{NAME}', $player->getName(), $message);
+        $message = str_replace('{IP}', $player->getAddress(), $message);
+        $message = str_replace('{ITEM_ID}', $player->getInventory()->getItemInHand()->getId(), $message);
         $message = str_replace('{X}', $player->getFloorX(), $message);
         $message = str_replace('{Y}', $player->getFloorY(), $message);
         $message = str_replace('{Z}', $player->getFloorZ(), $message);
@@ -188,6 +191,7 @@ class AdvancedScoreboard extends PluginBase{
         $message = str_replace('{TICKS}', $this->getServer()->getTickUsage(), $message);
         $message = str_replace('{TPS}', $this->getServer()->getTicksPerSecond(), $message);
         $message = str_replace('{ONLINE}', count($this->getServer()->getOnlinePlayers()), $message);
+        $message = str_replace('{MAX_ONLINE}', $player->getServer()->getMaxPlayers(), $message);
         $message = str_replace("{DATE}", date("H:i a"), $message);
         $message = str_replace("{RANDOMCOLOR}", $this->getColor(), $message);
         $message = $this->reviewAllPlugins($player, $message);
@@ -234,6 +238,17 @@ class AdvancedScoreboard extends PluginBase{
 		if (!is_null($CPS)) {
 			$message = str_replace('{CPS}', $CPS->getCps($player), $message);
 		}
+
+        $RedSkyBlock = $this->getServer()->getPluginManager()->getPlugin("RedSkyBlock");
+        if (!is_null($RedSkyBlock)) {
+            $message = str_replace('{ISLAND_NAME}', $RedSkyBlock->getIslandName($player), $message);
+            $message = str_replace('{ISLAND_MEMBERS}', $RedSkyBlock->getMembers($player), $message);
+            $message = str_replace('{ISLAND_BANNED}', $RedSkyBlock->getBanned($player), $message);
+            $message = str_replace('{ISLAND_LOCKED_STATUS}', $RedSkyBlock->getLockedStatus($player), $message);
+            $message = str_replace('{ISLAND_SIZE}', $RedSkyBlock->getSize($player), $message);
+            $message = str_replace('{ISLAND_RANK}', $RedSkyBlock->calcRank(strtolower($player->getName())), $message);
+            $message = str_replace('{ISLAND_VALUE}', $RedSkyBlock->getValue($player), $message);
+        }
 		return $message;
 	}
 }
