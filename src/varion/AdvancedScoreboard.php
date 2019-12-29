@@ -162,7 +162,8 @@ class AdvancedScoreboard extends PluginBase{
 		$player->sendDataPacket($packet);
 	}
 
-	/**
+
+        /**
 	* @return string
 	*/
 	public function getColor() : string{
@@ -211,8 +212,10 @@ class AdvancedScoreboard extends PluginBase{
 			$message = str_replace('{MONEY}', $EconomyAPI->myMoney($player), $message);
 		}
 		$FactionsPro = $this->getServer()->getPluginManager()->getPlugin("FactionsPro");
+        $factionName = $FactionsPro->getPlayerFaction($player->getName());
 		if(!is_null($FactionsPro)){
 			$message = str_replace('{FACTION}', $FactionsPro->getPlayerFaction($player->getName()), $message);
+            $message = str_replace('{FPOWER}', $FactionsPro->getFactionPower($factionName), $message);
 		}
 
         $Logger = $this->getServer()->getPluginManager()->getPlugin("CombatLogger");
