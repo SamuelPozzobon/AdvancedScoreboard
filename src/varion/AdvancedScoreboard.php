@@ -2,7 +2,7 @@
 
 namespace varion;
 
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
 use pocketmine\utils\TextFormat;
@@ -12,6 +12,7 @@ use pocketmine\network\mcpe\protocol\RemoveObjectivePacket;
 use pocketmine\network\mcpe\protocol\SetDisplayObjectivePacket;
 use pocketmine\network\mcpe\protocol\SetScorePacket;
 use pocketmine\network\mcpe\protocol\types\ScorePacketEntry;
+use pocketmine\network\NetworkSessionManager;
 use jojoe77777\FormAPI;
 
 
@@ -54,13 +55,14 @@ class AdvancedScoreboard extends PluginBase{
 		if(isset(self::$scoreboard[$player->getName()])){
 			$this->removeScore($player);
 		}
+		$session = new NetworkSession();
 		$packet = new SetDisplayObjectivePacket();
 		$packet->displaySlot = $displaySlot;
 		$packet->objectiveName = "objective";
 		$packet->displayName = $displayName;
 		$packet->criteriaName = "dummy";
 		$packet->sortOrder = $sortOrder;
-		$player->sendDataPacket($packet);
+		$session->sendDataPacket($packet);
 		self::$scoreboard[$player->getName()] = $player->getName();
 	}
 
@@ -69,9 +71,10 @@ class AdvancedScoreboard extends PluginBase{
 	* @return void
 	*/
 	public function removeScore(Player $player) : void{
+		$session = new NetworkSession();
 		$packet = new RemoveObjectivePacket();
 		$packet->objectiveName = "objective";
-		$player->sendDataPacket($packet);
+		$session->sendDataPacket($packet);
 		unset(self::$scoreboard[$player->getName()]);
 	}
 
@@ -100,7 +103,7 @@ class AdvancedScoreboard extends PluginBase{
                         }
                         return false;
                     });
-                    $form->setTitle(TextFormat::GOLD . "§lADVANCED SCOREBOARDS");
+                    $form->setTitle(TextFormat::GOLD . "§lADVANCEDSCOREBOARD");
                     $form->setContent("Select an option");
                     $form->addButton(TextFormat::BOLD . "§l§aShow Scoreboard");
                     $form->addButton(TextFormat::BOLD . "§l§cHide Scoreboard");
@@ -154,11 +157,11 @@ class AdvancedScoreboard extends PluginBase{
 		$pkline->customName = $message;
 		$pkline->score = $line;
 		$pkline->scoreboardId = $line;
-		
+		$session = new NetworkSession();
 		$packet = new SetScorePacket();
 		$packet->type = SetScorePacket::TYPE_CHANGE;
 		$packet->entries[] = $pkline;
-		$player->sendDataPacket($packet);
+		$session->sendDataPacket($packet);
 	}
 
 

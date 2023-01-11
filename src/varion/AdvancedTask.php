@@ -3,9 +3,9 @@
 namespace varion;
 
 use pocketmine\Server;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\utils\Config;
-use pocketmine\level\Level;
+use pocketmine\world\World;
 use pocketmine\scheduler\Task;
 
 class AdvancedTask extends Task {
@@ -37,7 +37,7 @@ class AdvancedTask extends Task {
             $this->Score(Server::getInstance()->getOnlinePlayers(), $this->getConfig()->get('default', []));
         }else{
             foreach ($worlds as $world => $title) {
-                $level_world = Server::getInstance()->getLevelByName($world);
+                $level_world = Server::getInstance()->getWorldByName($world);
                 if ($level_world instanceof Level) {
                     $this->Score($level_world->getPlayers(), $title);
                 }
