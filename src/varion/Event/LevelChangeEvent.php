@@ -2,7 +2,7 @@
 
 namespace varion\Event;
 
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\event\Listener;
 use pocketmine\event\entity\EntityLevelChangeEvent;
 use varion\AdvancedScoreboard;
