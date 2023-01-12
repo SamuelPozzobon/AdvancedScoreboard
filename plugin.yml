@@ -1,9 +1,17 @@
 name: AdvancedScoreboard
 main: varion\AdvancedScoreboard
 author: Varion
-version: 1.3
-api: 3.0.0
+version: 1.5
+api: 4.0.0
 
 commands:
- as:
-  description: "Open AdvancedScoreboards menu"
+  as:
+    usage: "/as"
+    description: AdvancedScoreboard settings
+    permission: advancedscoreboard.use
+    permission-message: "You don't have permission to use this command."
+
+permissions:
+  advancedscoreboard.use:
+    description: "Open AdvancedScoreboards menu"
+    default: true  
