@@ -2,17 +2,19 @@
 
 namespace varion;
 
-use pocketmine\Player;
+use pocketmine\player\Player;
+use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\TextFormat as TF;
-use pocketmine\utils\TextFormat;
 use varion\Event\LevelChangeEvent;
 use pocketmine\command\{Command,CommandSender};
 use pocketmine\network\mcpe\protocol\RemoveObjectivePacket;
 use pocketmine\network\mcpe\protocol\SetDisplayObjectivePacket;
 use pocketmine\network\mcpe\protocol\SetScorePacket;
 use pocketmine\network\mcpe\protocol\types\ScorePacketEntry;
+use pocketmine\network\NetworkSessionManager;
 use jojoe77777\FormAPI;
+use jojoe77777\FormAPI\SimpleForm;
 
 
 class AdvancedScoreboard extends PluginBase{
@@ -42,7 +44,7 @@ class AdvancedScoreboard extends PluginBase{
 	public static function getInstance() : AdvancedScoreboard{
 		return static::$plugin;
 	}
-
+ 
 	/**
 	* @param Player $player
 	* @param string $displayName
@@ -60,7 +62,7 @@ class AdvancedScoreboard extends PluginBase{
 		$packet->displayName = $displayName;
 		$packet->criteriaName = "dummy";
 		$packet->sortOrder = $sortOrder;
-		$player->sendDataPacket($packet);
+  $player->getNetworkSession()->sendDataPacket($packet);
 		self::$scoreboard[$player->getName()] = $player->getName();
 	}
 
@@ -71,7 +73,7 @@ class AdvancedScoreboard extends PluginBase{
 	public function removeScore(Player $player) : void{
 		$packet = new RemoveObjectivePacket();
 		$packet->objectiveName = "objective";
-		$player->sendDataPacket($packet);
+		$player->getNetworkSession()->sendDataPacket($packet);
 		unset(self::$scoreboard[$player->getName()]);
 	}
 
@@ -80,8 +82,8 @@ class AdvancedScoreboard extends PluginBase{
         switch ($cmd->getName()) {
             case "as":
                 if ($sender instanceof Player) {
-                    $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
-                    $form = $api->createSimpleForm(function (Player $sender, ?int $data){
+                 if($sender->hasPermission("advancedscoreboard.use")){
+                    $form = new SimpleForm(function (Player $sender, ?int $data){
                         if ($data === null){
                             return true;
                         }
@@ -100,15 +102,15 @@ class AdvancedScoreboard extends PluginBase{
                         }
                         return false;
                     });
-                    $form->setTitle(TextFormat::GOLD . "§lADVANCED SCOREBOARDS");
+                    $form->setTitle(TF::GOLD . "§lADVANCEDSCOREBOARD");
                     $form->setContent("Select an option");
-                    $form->addButton(TextFormat::BOLD . "§l§aShow Scoreboard");
-                    $form->addButton(TextFormat::BOLD . "§l§cHide Scoreboard");
-
+                    $form->addButton(TF::BOLD . "§l§aShow Scoreboard");
+                    $form->addButton(TF::BOLD . "§l§cHide Scoreboard");
                     $form->sendToPlayer($sender);
-                }
+               }
+              }
                 else{
-                    $sender->sendMessage(TextFormat::RED . "Use this Command in-game.");
+                    $sender->sendMessage(TF ::RED . "Use this Command in-game.");
                     return true;
                 }
                     }
@@ -147,18 +149,16 @@ class AdvancedScoreboard extends PluginBase{
 		if ($translate) {
 			$message = $this->translate($player, $message);
 		}
-
-		$pkline = new ScorePacketEntry();
+	 $pkline = new ScorePacketEntry();
 		$pkline->objectiveName = "objective";
 		$pkline->type = ScorePacketEntry::TYPE_FAKE_PLAYER;
 		$pkline->customName = $message;
 		$pkline->score = $line;
 		$pkline->scoreboardId = $line;
-		
 		$packet = new SetScorePacket();
 		$packet->type = SetScorePacket::TYPE_CHANGE;
 		$packet->entries[] = $pkline;
-		$player->sendDataPacket($packet);
+		$player->getNetworkSession()->sendDataPacket($packet); 
 	}
 
 
@@ -177,14 +177,15 @@ class AdvancedScoreboard extends PluginBase{
      * @return string
      */
     public function translate(Player $player, string $message) : string{
-        $message = str_replace('{PING}', $player->getPing(), $message);
+        $message = str_replace('{PING}', $player->getNetworkSession()->getPing(), $message);
         $message = str_replace('{NAME}', $player->getName(), $message);
-        $message = str_replace('{IP}', $player->getAddress(), $message);
+        $message = str_replace('{X}', $player->getPosition()->getX(), $message);
+        $message = str_replace('{Y}', $player->getPosition()->getY(), $message);
+        $message = str_replace('{Z}', $player->getPosition()->getZ(), $message);
+
+        $message = str_replace('{IP}', $player->getNetworkSession()->getIP(), $message);
         $message = str_replace('{ITEM_ID}', $player->getInventory()->getItemInHand()->getId(), $message);
-        $message = str_replace('{X}', $player->getFloorX(), $message);
-        $message = str_replace('{Y}', $player->getFloorY(), $message);
-        $message = str_replace('{Z}', $player->getFloorZ(), $message);
-        $level = $player->getLevel();
+        $level = $player->getWorld();
         $message = str_replace('{WORLDNAME}', $level->getFolderName(), $message);
         $message = str_replace('{WORLDPLAYERS}', count($level->getPlayers()), $message);
         $message = str_replace('{TICKS}', $this->getServer()->getTickUsage(), $message);
@@ -215,12 +216,10 @@ class AdvancedScoreboard extends PluginBase{
 			$message = str_replace('{MONEY}', $EconomyAPI->myMoney($player), $message);
 		}
 		$FactionsPro = $this->getServer()->getPluginManager()->getPlugin("FactionsPro");
-        $factionName = $FactionsPro->getPlayerFaction($player->getName());
 		if(!is_null($FactionsPro)){
 			$message = str_replace('{FACTION}', $FactionsPro->getPlayerFaction($player->getName()), $message);
             $message = str_replace('{FPOWER}', $FactionsPro->getFactionPower($factionName), $message);
 		}else{
-			$this->getLogger()->info(TF::DARK_PURPLE."FactionsPro not found");
 			$message = str_replace('{FACTION}', "PLUGIN NOT INSTALLED", $message);
 			$message = str_replace('{FPOWER}', "PLUGIN NOT INSTALLED", $message);
 		}
@@ -229,7 +228,6 @@ class AdvancedScoreboard extends PluginBase{
         if (!is_null($Logger)) {
             $message = str_replace('{COMBATLOGGER}', $Logger->getTagDuration($player), $message);
         }else{
-			$this->getLogger()->info(TF::DARK_PURPLE."CombatLogger not found");
 			$message = str_replace('{COMBATLOGGER}', "PLUGIN NOT INSTALLED", $message);
 	}
 
