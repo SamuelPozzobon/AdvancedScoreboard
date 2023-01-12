@@ -30,14 +30,14 @@ class AdvancedTask extends Task {
     /**
      * @param int $tick
      */
-    public function onRun($tick) : void{
+    public function onRun() : void{
         $worlds = $this->getConfig()->get("worlds", []);
 
         if (empty($worlds)) {
             $this->Score(Server::getInstance()->getOnlinePlayers(), $this->getConfig()->get('default', []));
         }else{
             foreach ($worlds as $world => $title) {
-                $level_world = Server::getInstance()->getWorldByName($world);
+                $level_world = Server::getInstance()->getWorldManager()->getWorldByName($world);
                 if ($level_world instanceof Level) {
                     $this->Score($level_world->getPlayers(), $title);
                 }
