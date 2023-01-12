@@ -1,6 +1,6 @@
 
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/SamuelPozzobon/AdvancedScoreboard">
     <img src="backgrounder.png" alt="Logo">
   </a>
 
