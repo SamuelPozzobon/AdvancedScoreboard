@@ -28,4 +28,13 @@
 - Multi-World scoreboard support
 - 30+ tags
   
-### New requests on issue page ;)
+<div align="center">
+  <a href="">
+    <img src="kb.png" alt="bugs" width="250">
+    </a>
+    <p align="center">  
+    · World section in config.yml seems to break the plugin, need more tests.
+    <br>
+  · Hide scoreboard with /as not working properly, as the task refresh the scoreboard and check if the player doesn't have the SB, so the synchronous code adds it to the player.
+</p>
+</div>
