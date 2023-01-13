@@ -35,7 +35,7 @@ class AdvancedScoreboard extends PluginBase{
 		$this->saveDefaultConfig();
 		$this->getServer()->getPluginManager()->registerEvents(new LevelChangeEvent($this), $this);
 		$this->getScheduler()->scheduleRepeatingTask(new AdvancedTask($this), $this->getConfig()->get("interval-time", 20));
-		$this->getLogger()->info(TF::DARK_PURPLE."ADVANCEDSCOREBOARD ENABLED");
+		$this->getLogger()->info(TF::DARK_PURPLE."AdvancedScoreboard enabled");
 	}
 
 	/**
@@ -102,7 +102,7 @@ class AdvancedScoreboard extends PluginBase{
                         }
                         return false;
                     });
-                    $form->setTitle(TF::GOLD . "§lADVANCEDSCOREBOARD");
+                    $form->setTitle(TF::GOLD . "Scoreboard");
                     $form->setContent("Select an option");
                     $form->addButton(TF::BOLD . "§l§aShow Scoreboard");
                     $form->addButton(TF::BOLD . "§l§cHide Scoreboard");
