@@ -22,7 +22,7 @@
 
 ### Features:
 - Highly customizable
-- Fast
+- Fast & Lightweight
 - Support to other plugins
 - Random color text
 - Multi-World scoreboard support
