@@ -1,8 +1,8 @@
 name: AdvancedScoreboard
 main: varion\AdvancedScoreboard
 author: Varion
-version: 1.5
-api: 4.0.0
+version: 1.6
+api: 5.0.0
 
 commands:
   as:

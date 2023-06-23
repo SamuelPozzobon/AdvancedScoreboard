@@ -184,7 +184,7 @@ class AdvancedScoreboard extends PluginBase{
         $message = str_replace('{Z}', $player->getPosition()->getZ(), $message);
 
         $message = str_replace('{IP}', $player->getNetworkSession()->getIP(), $message);
-        $message = str_replace('{ITEM_ID}', $player->getInventory()->getItemInHand()->getId(), $message);
+        // $message = str_replace('{ITEM_ID}', $player->getInventory()->getItemInHand(), $message);
         $level = $player->getWorld();
         $message = str_replace('{WORLDNAME}', $level->getFolderName(), $message);
         $message = str_replace('{WORLDPLAYERS}', count($level->getPlayers()), $message);

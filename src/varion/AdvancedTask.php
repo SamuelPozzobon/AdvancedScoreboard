@@ -28,6 +28,7 @@ class AdvancedTask extends Task {
     }
 
     /**
+     * @param int $currentTick
      * @param int $tick
      */
     public function onRun() : void{
