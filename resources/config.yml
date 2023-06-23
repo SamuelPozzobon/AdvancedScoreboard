@@ -7,7 +7,7 @@ interval-time: 20
 # {ONLINE} -> The number of online players
 # {MAX_ONLINE} -> The server slots number
 # {IP} -> Current player's IP
-# {ITEM_ID} -> Current item in hand (NOT SUPPORTED IN 1.6 DUE TO BUG)
+# {ITEM_ID} -> Current item in hand
 # {X} {Y} {Z} -> X/Y/Z coordinate of the player
 # {CPS} -> Get the CPS of the player (Requires PreciseCPSCounter by Luca28pet)
 # {RANK} -> Current ingame group (Requires PurePerms by poggit-orphanage)
