@@ -92,13 +92,9 @@ class AdvancedScoreboard extends PluginBase{
                             case 0:
                                 $this->createScore[$sender->getName()] = $sender->getName();
                                 return true;
-                                break;
-
                             case 1:
                                 $this->removeScore($sender);
-
                                 return true;
-
                         }
                         return false;
                     });

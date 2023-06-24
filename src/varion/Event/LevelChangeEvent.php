@@ -29,16 +29,8 @@ class LevelChangeEvent implements Listener{
 		$player = $event->getEntity();
         if ($player instanceof Player) {
 			$this->plugin->removeScore($player);
-            if (empty($worlds)) {
-                $this->Score(Server::getInstance()->getOnlinePlayers(), $this->getConfig()->get('default', []));
-            }else{
-                foreach ($worlds as $world => $title) {
-                    $level_world = Server::getInstance()->getWorldManager()->getWorldByName($world);
-                    if ($level_world instanceof Level) {
-                        $this->Score($level_world->getPlayers(), $title);
-                    }
-                }
-            }
+            $this->Score(Server::getInstance()->getOnlinePlayers(), $this->getConfig()->get('default', []));
+
             return true;
 		}
 	}

@@ -32,7 +32,6 @@ class AdvancedTask extends Task {
      * @param int $tick
      */
     public function onRun() : void{
-        $worlds = $this->getConfig()->get("worlds", []);
 
         if (empty($worlds)) {
             $this->Score(Server::getInstance()->getOnlinePlayers(), $this->getConfig()->get('default', []));
