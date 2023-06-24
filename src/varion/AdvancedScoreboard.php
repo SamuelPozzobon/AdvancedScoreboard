@@ -15,7 +15,7 @@ use pocketmine\network\mcpe\protocol\types\ScorePacketEntry;
 use pocketmine\network\NetworkSessionManager;
 use jojoe77777\FormAPI;
 use jojoe77777\FormAPI\SimpleForm;
-
+use function str_replace;
 
 class AdvancedScoreboard extends PluginBase{
 	
@@ -173,6 +173,7 @@ class AdvancedScoreboard extends PluginBase{
      * @return string
      */
     public function translate(Player $player, string $message) : string{
+
         $message = str_replace('{PING}', $player->getNetworkSession()->getPing(), $message);
         $message = str_replace('{NAME}', $player->getName(), $message);
         $message = str_replace('{X}', $player->getPosition()->getX(), $message);
@@ -197,20 +198,23 @@ class AdvancedScoreboard extends PluginBase{
 	/**
 	* @param Player $player
 	* @param string $message
+    * @param null    $levelName
 	* @return string
 	*/
 	private function reviewAllPlugins(Player $player, string $message) : string{
 		$PurePerms = $this->getServer()->getPluginManager()->getPlugin("PurePerms");
-		if (!is_null($PurePerms)) {
-			$message = str_replace('{RANK}', $PurePerms->getUserDataMgr()->getGroup($player)->getName(), $message);
-			$message = str_replace('{PREFIX}', $PurePerms->getUserDataMgr()->getNode($player, "prefix"), $message);
-			$message = str_replace('{SUFFIX}', $PurePerms->getUserDataMgr()->getNode($player, "suffix"), $message);
+
+        // what happened here: PurePerms's getNode($player, "prefix/suffix") method is deprecated,
+        // so it has been removed in new v2.0.
+        if (!is_null($PurePerms)) {
+			$message = str_replace('{RANK}', $PurePerms->getUserDataMgr()->getGroup($player), $message);
 		}
 
 		$EconomyAPI = $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
 		if (!is_null($EconomyAPI)) {
 			$message = str_replace('{MONEY}', $EconomyAPI->myMoney($player), $message);
-		}
+        }
+
 		$FactionsPro = $this->getServer()->getPluginManager()->getPlugin("FactionsPro");
 		if(!is_null($FactionsPro)){
 			$message = str_replace('{FACTION}', $FactionsPro->getPlayerFaction($player->getName()), $message);
