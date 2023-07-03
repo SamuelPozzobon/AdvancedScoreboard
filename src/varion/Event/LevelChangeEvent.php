@@ -5,6 +5,7 @@ namespace varion\Event;
 use pocketmine\player\Player;
 use pocketmine\event\Listener;
 use pocketmine\event\entity\EntityTeleportEvent;
+use pocketmine\Server;
 use varion\AdvancedScoreboard;
 
 class LevelChangeEvent implements Listener{
@@ -19,10 +20,19 @@ class LevelChangeEvent implements Listener{
 		$this->plugin = $plugin;
 	}
 
-	public function onChange(EntityTeleportEvent $event) {
-		$player = $event->getEntity();
-		if ($player instanceof Player) {
-			$this->plugin->removeScore($player);
-		}
-	}
+    /**
+     * @param Player $player
+     * @param array $titles
+     * @param array $lines
+     */
+	public function onChange(EntityTeleportEvent $event)
+    {
+        $player = $event->getEntity();
+        if ($player instanceof Player) {
+            $this->plugin->removeScore($player);
+        }
+     return true;
+    }
+
+
 }

@@ -14,8 +14,6 @@ interval-time: 20
 # {WORLDNAME} -> Name of the world
 # {WORLDPLAYERS} -> Players in the world
 # {MONEY} -> Money of the player (Requires EconomyAPI by poggit-orphanage)
-# {PREFIX} -> Show prefix of a player (Requires PureChat by poggit-orphanage)
-# {SUFFIX} -> Show suffix of a player(Requires PureChat by poggit-orphanage)
 # {FACTION} -> Show player's factions (Requires FactionsPro by poggit-orphanage)
 # {FPOWER} -> Show player's faction power (Requires FactionsPro by poggit-orphanage)
 # {TICKS} -> Show server's ticks
@@ -38,7 +36,7 @@ interval-time: 20
 # NEW TAGS SOON
 
 
-default: # DEFAULT | IF NO WORLDS ARE CONFIGURED WILL DISPLAY THIS FOR EVERY WORLD
+default:
   title:
     - '&cADVANCEDSCOREBOARD'
     - '&aADVANCEDSCOREBOARD'
@@ -47,22 +45,6 @@ default: # DEFAULT | IF NO WORLDS ARE CONFIGURED WILL DISPLAY THIS FOR EVERY WOR
     - '&7Online: &3{ONLINE}'
     - '&7World: &3{WORLDNAME}'
     - '&7CPS: &3{CPS}'
-    - '&7X: &a{X}'
-    - '&7Y: &a{Y}'
-    - '&7Z: &a{Z}'
-
-worlds:
-  world:
-    title:
-    - '&cADVANCEDSCOREBOARD'
-    - '&aADVANCEDSCOREBOARD'
-    lines:
-    - '&7Player: &3{NAME}'
-    - '&7Online: &3{ONLINE}'
-    - '&7World: &3{WORLDNAME}'
-    - '&7CPS: &3{CPS}'    
-    - '&7X: &a{X}'
-    - '&7Y: &a{Y}'
-    - '&7Z: &a{Z}'
+    - '&7RANK: &a{RANK}'
 
 ...
